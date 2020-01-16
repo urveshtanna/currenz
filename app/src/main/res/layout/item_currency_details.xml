@@ -3,12 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="currencyDetails"
+            type="com.urveshtanna.currenz.domain.dataModel.CurrencyDetails" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/content"
         android:padding="@dimen/default_padding">
 
         <TextView
@@ -16,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:text="@{currencyDetails.formattedName()}"
             tools:text="Country Name/Symbol" />
 
     </LinearLayout>

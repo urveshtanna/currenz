@@ -7,4 +7,13 @@
     <color name="colorOnPrimary">#000000</color>
     <color name="colorOnSecondary">#FFFFFF</color>
     <color name="background">#1D2126</color>
+    <color name="backgroundDark">#FFFFFF</color>
+    <color name="colorError">#F44336</color>
+    <color name="colorOnError">#FFFFFF</color>
+    <color name="primaryTextColor">#FFFFFF</color>
+    <color name="primaryInvertedTextColor">#000000</color>
+    <color name="secondaryTextColor">#C4CBD3</color>
+    <color name="secondaryInvertedTextColor">#1D2126</color>
+    <color name="hintTextColor">#979797</color>
+    <color name="iconColor">#FFFFFF</color>
 </resources>

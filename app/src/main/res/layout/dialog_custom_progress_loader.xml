@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="loadingMessage"
+            type="String" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/dimen_24_dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+
+            <ProgressBar
+                android:id="@+id/progress_circular"
+                android:layout_width="@dimen/progress_bar_size"
+                android:layout_height="@dimen/progress_bar_size" />
+
+            <TextView
+                android:id="@+id/tv_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dimen_24_dp"
+                android:layout_marginRight="@dimen/dimen_24_dp"
+                android:text="@{loadingMessage}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:visibility="@{loadingMessage == null ? View.GONE : View.VISIBLE}"
+                tools:text="Loading" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</layout>

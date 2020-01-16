@@ -12,14 +12,23 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    dataBinding {
+        enabled = true
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue "string", "base_url", "http://api.currencylayer.com/"
+            resValue "string", "access_key", "4eb03e58479e18e16852bfce72c16929"
+        }
+        debug {
+            resValue "string", "base_url", "http://api.currencylayer.com/"
+            resValue "string", "access_key", "4eb03e58479e18e16852bfce72c16929"
         }
     }
 
@@ -34,7 +43,14 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
+    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
 
+    // network
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp3Version"
+    implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttp3Version"
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:$rootProject.okhttp3Version"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

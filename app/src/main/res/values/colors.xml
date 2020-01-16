@@ -7,4 +7,13 @@
     <color name="colorOnPrimary">#FFFFFF</color>
     <color name="colorOnSecondary">#000000</color>
     <color name="background">#FAFAFA</color>
+    <color name="backgroundDark">#212121</color>
+    <color name="colorError">#F44336</color>
+    <color name="colorOnError">#FFFFFF</color>
+    <color name="primaryTextColor">#202020</color>
+    <color name="primaryInvertedTextColor">#FFFFFF</color>
+    <color name="hintTextColor">#979797</color>
+    <color name="secondaryTextColor">#80000000</color>
+    <color name="secondaryInvertedTextColor">#FFFFFF</color>
+    <color name="iconColor">#000000</color>
 </resources>

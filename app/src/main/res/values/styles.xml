@@ -8,6 +8,8 @@
         <item name="colorSecondary">@color/colorAccent</item>
         <item name="colorSecondaryVariant">@color/colorAccentVarient</item>
         <item name="colorOnSecondary">@color/colorOnSecondary</item>
+        <item name="colorError">@color/colorError</item>
+        <item name="colorOnError">@color/colorOnError</item>
         <item name="android:colorBackground">@color/background</item>
     </style>
 

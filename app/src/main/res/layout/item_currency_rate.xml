@@ -3,12 +3,19 @@
 
     <data>
 
+        <variable
+            name="currencyRate"
+            type="com.urveshtanna.currenz.domain.dataModel.CurrencyRateDetails" />
+
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_margin="@dimen/dimen_8_dp"
+        android:background="@drawable/background_exchange_rate_card"
+        android:gravity="center_horizontal"
         android:padding="@dimen/default_padding">
 
         <TextView
@@ -16,7 +23,11 @@
             tools:text="Country Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:ellipsize="end"
+            android:maxEms="8"
+            android:maxLines="1"
+            android:text="@{currencyRate.name}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
 
         <TextView
             android:id="@+id/tv_exchange_rate"
@@ -24,7 +35,15 @@
             android:layout_height="wrap_content"
             tools:text="Exchange Rate"
             android:layout_marginTop="@dimen/dimen_12_dp"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+            android:drawableRight="@drawable/ic_info"
+            android:drawablePadding="@dimen/dimen_8_dp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxEms="8"
+            android:maxLines="1"
+            android:text="@{currencyRate.formattedExchangeValue()}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textStyle="bold" />
 
     </LinearLayout>
 </layout>
