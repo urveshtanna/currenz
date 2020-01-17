@@ -2,6 +2,7 @@ package com.urveshtanna.currenz.ui.home.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
@@ -70,9 +71,16 @@ class ExchangeRateAdapter(var context: Context, var exchangeRateList: List<Curre
                 dialog.create().show()
             }
         } else if(holder is FooterHolder){
-            holder.binding.tvRefreshedOn.text = context.getString(R.string.as_of_variable, exchangeRateList[0].formattedLastUpdated())
-            holder.binding.btnRefreshNow.setOnClickListener {
-                onRefreshClickListener.onRefreshNowClick()
+            if (itemCount > 1) {
+                holder.binding.tvRefreshedOn.text = context.getString(
+                    R.string.as_of_variable,
+                    exchangeRateList[0].formattedLastUpdated()
+                )
+                holder.binding.btnRefreshNow.setOnClickListener {
+                    onRefreshClickListener.onRefreshNowClick()
+                }
+            } else {
+                holder.binding.root.visibility = View.GONE
             }
         }
     }

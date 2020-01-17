@@ -24,11 +24,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             resValue "string", "base_url", "http://api.currencylayer.com/"
-            resValue "string", "access_key", "4eb03e58479e18e16852bfce72c16929"
+            resValue "string", "access_key", ""
         }
         debug {
             resValue "string", "base_url", "http://api.currencylayer.com/"
-            resValue "string", "access_key", "4eb03e58479e18e16852bfce72c16929"
+            resValue "string", "access_key", ""
         }
     }
 

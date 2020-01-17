@@ -267,6 +267,7 @@ class HomeScreenActivity : AppCompatActivity(),
             null,
             object : Utils.Companion.OnErrorMessageDialogListener {
                 override fun onPositiveActionClick(dialog: DialogInterface) {
+                    fetchAvailableCurrencies()
                     dialog.dismiss()
                 }
 

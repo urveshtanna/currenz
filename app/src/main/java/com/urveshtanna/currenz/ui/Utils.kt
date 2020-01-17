@@ -150,8 +150,8 @@ class Utils() {
             context: Context,
             onNetworkRetryListener: OnNetworkRetryListener
         ) {
-            if (dialog == null) {
-                var alertDialogBuilder = AlertDialog.Builder(context)
+            if (dialog == null || !dialog!!.isShowing) {
+                val alertDialogBuilder = AlertDialog.Builder(context)
                 alertDialogBuilder.setTitle(context.getString(R.string.app_name))
                 alertDialogBuilder.setMessage(context.getString(R.string.internet_not_available))
                 alertDialogBuilder.setCancelable(false)
@@ -160,7 +160,7 @@ class Utils() {
                 }
                 dialog = alertDialogBuilder.create()
                 dialog!!.show()
-            } else {
+            } else if (dialog != null && dialog!!.isShowing) {
                 dialog!!.dismiss()
                 dialog = null
                 showInternetErrorPopup(context, onNetworkRetryListener)
@@ -185,7 +185,7 @@ class Utils() {
             negativeButtonText: String? = null,
             onErrorMessageDialogListener: OnErrorMessageDialogListener
         ) {
-            if (dialog == null) {
+            if (dialog == null || !dialog!!.isShowing) {
                 val alertDialogBuilder = AlertDialog.Builder(context)
                 alertDialogBuilder.setTitle(title)
                 alertDialogBuilder.setMessage(msg)
@@ -202,7 +202,7 @@ class Utils() {
 
                 dialog = alertDialogBuilder.create()
                 dialog!!.show()
-            } else {
+            } else if (dialog != null && dialog!!.isShowing) {
                 dialog!!.dismiss()
                 dialog = null
                 showDialog(
@@ -226,7 +226,7 @@ class Utils() {
             context: Context,
             msg: String = context.getString(R.string.loading)
         ) {
-            if (progressDialog == null || progressDialog!!.isShowing) {
+            if (progressDialog == null || !progressDialog!!.isShowing) {
                 val view: DialogCustomProgressLoaderBinding = DataBindingUtil.inflate(
                     LayoutInflater.from(context),
                     R.layout.dialog_custom_progress_loader,
@@ -239,7 +239,7 @@ class Utils() {
                 alertDialogBuilder.setView(view.root)
                 progressDialog = alertDialogBuilder.create()
                 progressDialog!!.show()
-            } else {
+            } else if (progressDialog != null && progressDialog!!.isShowing) {
                 progressDialog!!.dismiss()
                 progressDialog = null
                 showProgressLoadingDialog(
