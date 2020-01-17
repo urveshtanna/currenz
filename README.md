@@ -12,7 +12,7 @@ A simple android app that uses [Currency Layer api](https://currencylayer.com/) 
 <br>
 <br>
 
-<a href="url"><img src="sample/sample_search_currency.png"  width="300" align="left" hspace="50" ></a>
-<a href="url"><img src="sample/sample_currency_details.png" width="300" align="right" hspace="50" ></a>
-<a href="url"><img src="sample/sample_sort.png" width="300" align="left" hspace="50"  ></a>
-<a href="url"><img src="sample/sample_refresh_rates.png" width="300" align="right" hspace="50" ></a>
+<img src="sample/sample_search_currency.png"  width="300" align="left" hspace="40"/>
+<img src="sample/sample_currency_details.png" width="300" align="right" hspace="40" />
+<img src="sample/sample_sort.png" width="300" align="left" hspace="40" />
+<img src="sample/sample_refresh_rates.png" width="300" align="right" hspace="40" />
