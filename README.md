@@ -16,3 +16,4 @@ A simple android app that uses [Currency Layer api](https://currencylayer.com/) 
 <img src="sample/sample_currency_details.png" width="300" align="right" hspace="40" />
 <img src="sample/sample_sort.png" width="300" align="left" hspace="40" />
 <img src="sample/sample_refresh_rates.png" width="300" align="right" hspace="40" />
+<img src="sample/sample_darkmode.png" width="300" align="left" hspace="40" />
