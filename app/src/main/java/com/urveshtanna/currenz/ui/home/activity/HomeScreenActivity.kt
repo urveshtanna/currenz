@@ -74,10 +74,10 @@ class HomeScreenActivity : AppCompatActivity(),
     private fun filterDialog() {
         val listItems =
             arrayOf(
-                "Alphabetically",
-                "Alphabetically Desc",
-                "Highest Rate",
-                "Lowest Rate",
+                "Name alphabetically",
+                "Name alphabetically desc",
+                "Highest rate",
+                "Lowest rate",
                 "Symbol"
             )
 

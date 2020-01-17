@@ -11,6 +11,11 @@
         <item name="colorError">@color/colorError</item>
         <item name="colorOnError">@color/colorOnError</item>
         <item name="android:colorBackground">@color/background</item>
+        <item name="materialButtonStyle">@style/PrimaryButton</item>
     </style>
 
+    <style name="PrimaryButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/primaryButtonTextColor</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>
