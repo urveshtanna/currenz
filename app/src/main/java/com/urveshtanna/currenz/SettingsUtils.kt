@@ -11,7 +11,7 @@ class SettingsUtils {
         }
 
         /**
-         * Testing function to enable/disable debug mode all over the app
+         * Testing function to enable/disable mock server calls
          */
         fun makeMockAPICalls(): Boolean {
             return !isDebug()
