@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 class LiveExchangeRateResponse : BaseResponse() {
 
     @SerializedName("quotes")
-    var quotes: HashMap<String, Double>? = null
+    var quotes: HashMap<String, Float>? = null
 
     @SerializedName("timestamp")
     var timestamp: Long? = null

@@ -4,7 +4,7 @@ import com.urveshtanna.currenz.ui.DateFormatter
 
 class CurrencyRateDetails {
 
-    var rate: Double = 0.0
+    var rate: Float = 0.0f
 
     var symbol: String? = null
 
@@ -12,14 +12,10 @@ class CurrencyRateDetails {
 
     var lastUpdated: Long? = null
 
-    var exchangeValue: Double = 0.0
-
-    fun formattedRate(): String? {
-        return "$rate"
-    }
+    var exchangeValue: Float = 0.0f
 
     fun formattedExchangeValue(): String? {
-        return "$exchangeValue"
+        return exchangeValue.toBigDecimal().toPlainString()
     }
 
     fun formattedLastUpdated(): String? {

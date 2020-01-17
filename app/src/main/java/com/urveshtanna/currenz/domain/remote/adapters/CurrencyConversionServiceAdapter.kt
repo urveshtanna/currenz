@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-public class CurrencyConversionServiceAdapter(var context: Context) {
+class CurrencyConversionServiceAdapter(var context: Context) {
     var apiServiceInterface: APIServiceInterface? = null
 
     fun getCurrencyConversionAdapter(): APIServiceInterface? {
@@ -29,7 +29,7 @@ public class CurrencyConversionServiceAdapter(var context: Context) {
             val restAdapter: Retrofit = Retrofit.Builder()
                 .baseUrl(context.getString(R.string.base_url))
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .client(getInternetValidatedClient(context))
+                .client(getInternetValidatedClient())
                 .build()
 
             apiServiceInterface = restAdapter.create(APIServiceInterface::class.java)
@@ -37,7 +37,7 @@ public class CurrencyConversionServiceAdapter(var context: Context) {
         }
     }
 
-    fun getInternetValidatedClient(context: Context): OkHttpClient? {
+    fun getInternetValidatedClient(): OkHttpClient {
         val httpClient = OkHttpClient.Builder()
         if (SettingsUtils.isDebug()) {
             val interceptor = HttpLoggingInterceptor()

@@ -11,6 +11,7 @@
         <item name="colorError">@color/colorError</item>
         <item name="colorOnError">@color/colorOnError</item>
         <item name="android:colorBackground">@color/background</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="materialButtonStyle">@style/PrimaryButton</item>
     </style>
 

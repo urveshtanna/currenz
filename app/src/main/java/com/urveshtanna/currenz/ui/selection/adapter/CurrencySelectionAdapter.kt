@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.urveshtanna.currenz.R
 import com.urveshtanna.currenz.databinding.ItemCurrencyDetailsBinding
 import com.urveshtanna.currenz.domain.dataModel.CurrencyDetails
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class CurrencySelectionAdapter(var context: Context, var currencies: List<CurrencyDetails>, var onCurrencyClickListener: OnCurrencyClickListener) :
@@ -35,16 +37,14 @@ class CurrencySelectionAdapter(var context: Context, var currencies: List<Curren
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is Holder) {
             holder.binding.currencyDetails = currenciesFiltered[holder.adapterPosition]
-            holder.binding.content.setOnClickListener({
+            holder.binding.content.setOnClickListener {
                 onCurrencyClickListener.onCurrencyClick(currenciesFiltered[holder.adapterPosition])
-            })
+            }
         }
     }
 
     inner class Holder(var binding: ItemCurrencyDetailsBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-    }
+        RecyclerView.ViewHolder(binding.root)
 
     interface OnCurrencyClickListener {
         fun onCurrencyClick(currency: CurrencyDetails)
@@ -59,11 +59,14 @@ class CurrencySelectionAdapter(var context: Context, var currencies: List<Curren
                 } else {
                     val filteredList: MutableList<CurrencyDetails> = ArrayList()
                     for (row in currencies) {
-                        if (row.name?.toLowerCase()?.contains(charString.toLowerCase())!! || row.symbol?.toLowerCase()?.contains(charString.toLowerCase())!!) {
+                        if (row.name?.toLowerCase(Locale.getDefault())?.contains(charString.toLowerCase(Locale.getDefault()))!! || row.symbol?.toLowerCase(
+                                Locale.getDefault()
+                            )?.contains(charString.toLowerCase(Locale.getDefault()))!!
+                        ) {
                             filteredList.add(row)
                         }
                     }
-                    currenciesFiltered = filteredList
+                    this@CurrencySelectionAdapter.currenciesFiltered = filteredList
                 }
                 val filterResults = FilterResults()
                 filterResults.values = currenciesFiltered

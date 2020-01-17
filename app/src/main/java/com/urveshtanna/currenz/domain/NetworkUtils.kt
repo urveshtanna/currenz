@@ -8,6 +8,9 @@ class NetworkUtils(var context: Context) {
 
     var networkType = -1
 
+    /**
+     * This function return is user devices has available internet connection
+     */
     fun isNetworkAvailable(): Boolean {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return run {
@@ -20,31 +23,6 @@ class NetworkUtils(var context: Context) {
             }
             val network = networkInfo.state
             network == NetworkInfo.State.CONNECTED || network == NetworkInfo.State.CONNECTING
-        }
-    }
-
-    fun isWIFI(): Boolean {
-        var isWIFI = false
-        if (networkType == ConnectivityManager.TYPE_WIFI) {
-            isWIFI = true
-        }
-        return isWIFI
-    }
-
-    fun isMobile(): Boolean {
-        var isMobile = false
-        if (networkType == ConnectivityManager.TYPE_MOBILE) {
-            isMobile = true
-        }
-        return isMobile
-    }
-
-    fun isRoaming(): Boolean {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return run {
-            val networkInfo = connectivityManager.activeNetworkInfo
-            networkInfo != null && networkInfo.isRoaming
         }
     }
 }

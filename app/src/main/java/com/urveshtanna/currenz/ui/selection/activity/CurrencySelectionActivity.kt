@@ -19,8 +19,7 @@ import com.urveshtanna.currenz.ui.selection.adapter.CurrencySelectionAdapter
 class CurrencySelectionActivity : AppCompatActivity(),
     CurrencySelectionAdapter.OnCurrencyClickListener {
 
-    val TAG = CurrencySelectionActivity::class.java.simpleName
-    var availableCurrencyMap: HashMap<String, String>? = HashMap()
+    private var availableCurrencyMap: HashMap<String, String>? = HashMap()
     var binding: ActivityCurrencySelectionBinding? = null
     var adapter: CurrencySelectionAdapter? = null
 
@@ -40,16 +39,16 @@ class CurrencySelectionActivity : AppCompatActivity(),
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_currency_selection_activity, menu)
         val mSearch: MenuItem = menu.findItem(R.id.appSearchBar)
-        val mSearchView: SearchView = mSearch.getActionView() as SearchView
-        mSearchView.setMaxWidth(Integer.MAX_VALUE);
-        mSearchView.setQueryHint(getString(R.string.search_by_name_symbol))
+        val mSearchView: SearchView = mSearch.actionView as SearchView
+        mSearchView.maxWidth = Integer.MAX_VALUE
+        mSearchView.queryHint = getString(R.string.search_by_name_symbol)
         mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                adapter?.getFilter()?.filter(newText)
+                adapter?.filter?.filter(newText)
                 return false
             }
         })
@@ -64,11 +63,11 @@ class CurrencySelectionActivity : AppCompatActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_currency_selection)
-        setSupportActionBar(binding?.toolbar);
-        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar()?.setDisplayShowHomeEnabled(true);
+        setSupportActionBar(binding?.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
         binding?.collapsingToolbar?.isTitleEnabled = false
-        getSupportActionBar()?.setTitle(getString(R.string.select_your_currency))
+        supportActionBar?.title = getString(R.string.select_your_currency)
 
         availableCurrencyMap =
             Utils.stringToMap(intent.getStringExtra(PARCELABLE_AVAILABLE_CURRENCIES))
@@ -76,14 +75,14 @@ class CurrencySelectionActivity : AppCompatActivity(),
     }
 
     private fun setUpSelectionAdapter() {
-        val currencyList: MutableList<CurrencyDetails> = ArrayList<CurrencyDetails>()
+        val currencyList: MutableList<CurrencyDetails> = ArrayList()
         availableCurrencyMap?.forEach {
             val currencyDetails = CurrencyDetails()
             currencyDetails.name = it.value
             currencyDetails.symbol = it.key
             currencyList.add(currencyDetails)
         }
-        var list = currencyList.sortedBy { it.name }
+        val list = currencyList.sortedBy { it.name }
         adapter = CurrencySelectionAdapter(this, list, this)
         binding?.recyclerView?.layoutManager = LinearLayoutManager(this)
         binding?.recyclerView?.adapter = adapter

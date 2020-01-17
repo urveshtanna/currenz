@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="sorting_options">
+        <item>Name alphabetically</item>
+        <item>Name alphabetically desc</item>
+        <item>Highest rate</item>
+        <item>Lowest rate</item>
+        <item>Symbol</item>
+    </array>
+</resources>
