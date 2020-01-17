@@ -6,9 +6,15 @@ class SettingsUtils {
         /**
          * Testing function to enable/disable debug mode all over the app
          */
-        @JvmStatic
         fun isDebug(): Boolean {
-            return !BuildConfig.DEBUG
+            return BuildConfig.DEBUG
+        }
+
+        /**
+         * Testing function to enable/disable debug mode all over the app
+         */
+        fun makeMockAPICalls(): Boolean {
+            return !isDebug()
         }
     }
 }

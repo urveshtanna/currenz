@@ -29,7 +29,7 @@ class CurrencyConversionServerCalls(
                 ?.getAllAvailableCurrencies(accessKey)
 
             showProgressLoader(activity.getString(R.string.fetching_available_currencies))
-            if (!SettingsUtils.isDebug()) {
+            if (!SettingsUtils.makeMockAPICalls()) {
                 call?.enqueue(object :
                     BaseRetrofitCallbackListener<AvailableCurrencyResponse>(activity) {
                     override fun onAPIResponse(
@@ -105,7 +105,7 @@ class CurrencyConversionServerCalls(
         if (NetworkUtils(activity).isNetworkAvailable()) {
             val call = CurrencyConversionServiceAdapter(activity).getCurrencyConversionAdapter()?.getLiveExchangeRate(accessKey)
             showProgressLoader(activity.getString(R.string.fetching_latest_exhange_rates))
-            if (!SettingsUtils.isDebug()) {
+            if (!SettingsUtils.makeMockAPICalls()) {
                 call?.enqueue(object : BaseRetrofitCallbackListener<LiveExchangeRateResponse>(activity) {
                     override fun onAPIResponse(
                         call: Call<LiveExchangeRateResponse>,
