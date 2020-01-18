@@ -24,12 +24,12 @@ class CurrencyConversionServerCalls(
         accessKey: String,
         onGetAvailableCurrenciesListener: APICallBackListener.OnGetAvailableCurrenciesListener
     ) {
-        if (NetworkUtils(activity).isNetworkAvailable()) {
-            val call = CurrencyConversionServiceAdapter(activity).getCurrencyConversionAdapter()
-                ?.getAllAvailableCurrencies(accessKey)
+        if (!SettingsUtils.makeMockAPICalls()) {
+            if (NetworkUtils(activity).isNetworkAvailable()) {
+                val call = CurrencyConversionServiceAdapter(activity).getCurrencyConversionAdapter()
+                    ?.getAllAvailableCurrencies(accessKey)
 
-            showProgressLoader(activity.getString(R.string.fetching_available_currencies))
-            if (!SettingsUtils.makeMockAPICalls()) {
+                showProgressLoader(activity.getString(R.string.fetching_available_currencies))
                 call?.enqueue(object :
                     BaseRetrofitCallbackListener<AvailableCurrencyResponse>(activity) {
                     override fun onAPIResponse(
@@ -75,26 +75,27 @@ class CurrencyConversionServerCalls(
 
                 })
             } else {
-                hideProgressLoader()
-                val responseBody: AvailableCurrencyResponse = Gson().fromJson(
-                    Utils.getResponseFromJsonFile(
-                        activity,
-                        R.raw.available_currencies
-                    ), AvailableCurrencyResponse::class.java
-                )
-                onGetAvailableCurrenciesListener.onGetAvailableCurrenciesSuccess(responseBody)
+                Utils.showInternetErrorPopup(
+                    activity,
+                    object : Utils.Companion.OnNetworkRetryListener {
+                        override fun onRetry() {
+                            getAvailableCurrencies(
+                                accessKey,
+                                onGetAvailableCurrenciesListener
+                            )
+                        }
+                    })
             }
         } else {
-            Utils.showInternetErrorPopup(
-                activity,
-                object : Utils.Companion.OnNetworkRetryListener {
-                    override fun onRetry() {
-                        getAvailableCurrencies(
-                            accessKey,
-                            onGetAvailableCurrenciesListener
-                        )
-                    }
-                })
+            Utils.showToast(activity, activity.getString(R.string.fetched_from_mock_api_call))
+            hideProgressLoader()
+            val responseBody: AvailableCurrencyResponse = Gson().fromJson(
+                Utils.getResponseFromJsonFile(
+                    activity,
+                    R.raw.available_currencies
+                ), AvailableCurrencyResponse::class.java
+            )
+            onGetAvailableCurrenciesListener.onGetAvailableCurrenciesSuccess(responseBody)
         }
     }
 
@@ -102,10 +103,12 @@ class CurrencyConversionServerCalls(
         accessKey: String,
         onGetLiveExchangeRateListener: APICallBackListener.OnGetLiveExchangeRateListener
     ) {
-        if (NetworkUtils(activity).isNetworkAvailable()) {
-            val call = CurrencyConversionServiceAdapter(activity).getCurrencyConversionAdapter()?.getLiveExchangeRate(accessKey)
-            showProgressLoader(activity.getString(R.string.fetching_latest_exhange_rates))
-            if (!SettingsUtils.makeMockAPICalls()) {
+        if (!SettingsUtils.makeMockAPICalls()) {
+            if (NetworkUtils(activity).isNetworkAvailable()) {
+                val call = CurrencyConversionServiceAdapter(activity).getCurrencyConversionAdapter()
+                    ?.getLiveExchangeRate(accessKey)
+                showProgressLoader(activity.getString(R.string.fetching_latest_exhange_rates))
+
                 call?.enqueue(object : BaseRetrofitCallbackListener<LiveExchangeRateResponse>(activity) {
                     override fun onAPIResponse(
                         call: Call<LiveExchangeRateResponse>,
@@ -145,7 +148,17 @@ class CurrencyConversionServerCalls(
 
                 })
             } else {
-                hideProgressLoader()
+                Utils.showInternetErrorPopup(
+                    activity,
+                    object : Utils.Companion.OnNetworkRetryListener {
+                        override fun onRetry() {
+                            getLiveExchangeRates(accessKey, onGetLiveExchangeRateListener)
+                        }
+                    })
+            }
+        } else {
+            Utils.showToast(activity, activity.getString(R.string.fetched_from_mock_api_call))
+            hideProgressLoader()
                 val responseBody: LiveExchangeRateResponse = Gson().fromJson(
                     Utils.getResponseFromJsonFile(
                         activity,
@@ -154,14 +167,5 @@ class CurrencyConversionServerCalls(
                 )
                 onGetLiveExchangeRateListener.onGetLiveExchangeRateSuccess(responseBody)
             }
-        } else {
-            Utils.showInternetErrorPopup(
-                activity,
-                object : Utils.Companion.OnNetworkRetryListener {
-                    override fun onRetry() {
-                        getLiveExchangeRates(accessKey, onGetLiveExchangeRateListener)
-                    }
-                })
-        }
     }
 }

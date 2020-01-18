@@ -16,4 +16,5 @@
     <string name="sort_by">Sort By</string>
     <string name="as_of_variable">As of %1$s</string>
     <string name="currency_details_message">\nSymbol: %1$s\n\nExchange rate: %2$s %3$s\n\nExchange value: %4$s\n\nAs of %5$s\n</string>
+    <string name="fetched_from_mock_api_call">Fetched from mock API call</string>
 </resources>
