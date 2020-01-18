@@ -1,7 +1,10 @@
 package com.urveshtanna.currenz.domain.dataModel
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 class LiveExchangeRateResponse : BaseResponse() {
 
     @SerializedName("quotes")

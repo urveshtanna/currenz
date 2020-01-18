@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.PersistableBundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AlertDialog
@@ -34,7 +35,13 @@ class HomeScreenActivity : AppCompatActivity(),
     APICallBackListener.OnGetAvailableCurrenciesListener, APICallBackListener.OnProgressListener,
     APICallBackListener.OnGetLiveExchangeRateListener, ExchangeRateAdapter.OnRefreshClickListener {
 
-    val TAG = HomeScreenActivity::class.java.simpleName
+    //Parcelable keys
+    val PARCEABLE_AMOUNT_KEY = "amount"
+    val PARCEABLE_SELECTED_SORTED = "selectedSortOption"
+    val PARCEABLE_AVAILABLE_CURRENCY = "availableCurrency"
+    val PARCEABLE_LIVE_RATES = "liveRates"
+
+
     var binding: ActivityHomeScreenBinding? = null
     var availableCurrencyMap: HashMap<String, String>? = HashMap()
     var lastUpdatedTimeStamp: Long? = null
@@ -44,7 +51,7 @@ class HomeScreenActivity : AppCompatActivity(),
 
     var adapter = ExchangeRateAdapter(this, exchangeRate, this)
     var selectedFilterMode = 0
-    var lastRefreshedOn: Long = 0;
+
     var refreshHandler: Handler? = null
     var REFRESH_HANDLER_MESSAGE: Int = 1235
 
@@ -55,7 +62,19 @@ class HomeScreenActivity : AppCompatActivity(),
             R.layout.activity_home_screen
         )
         setUpUIComponents()
-        fetchAvailableCurrencies()
+
+        //Handling Screen rotation
+        if (savedInstanceState == null) {
+            fetchAvailableCurrencies()
+        } else {
+            //Getting parceled value from bundle
+            binding?.edtAmount?.setText(savedInstanceState.getString(PARCEABLE_AMOUNT_KEY))
+            selectedFilterMode = savedInstanceState.getInt(PARCEABLE_SELECTED_SORTED)
+            val availableCurrencyResponse: AvailableCurrencyResponse? = savedInstanceState.getParcelable(PARCEABLE_AVAILABLE_CURRENCY)
+            availableCurrencyMap?.putAll(availableCurrencyResponse?.currencies!!.toList())
+            val liveExchangeRateResponse: LiveExchangeRateResponse? = savedInstanceState.getParcelable(PARCEABLE_LIVE_RATES)
+            onGetLiveExchangeRateSuccess(liveExchangeRateResponse)
+        }
     }
 
     /**
@@ -207,6 +226,7 @@ class HomeScreenActivity : AppCompatActivity(),
     private fun updateCurrency() {
         binding?.btnChangeCurrency?.text = AppSharedPreferences(this).getUserPreferredCurrency()
         if (!binding?.edtAmount?.text.isNullOrEmpty()) {
+            hideProgressLoader()
             Utils.showView(binding?.recyclerView, binding?.btnFilter)
             val userInput: Float = binding?.edtAmount?.text.toString().toFloat()
             val userSymbol: String? = AppSharedPreferences(this).getUserPreferredCurrency()
@@ -226,7 +246,6 @@ class HomeScreenActivity : AppCompatActivity(),
 
 
     override fun onGetAvailableCurrenciesSuccess(availableCurrencyResponse: AvailableCurrencyResponse?) {
-        binding?.btnChangeCurrency?.text = AppSharedPreferences(this).getUserPreferredCurrency()
         availableCurrencyMap?.putAll(availableCurrencyResponse?.currencies!!.toList())
         fetchLiveExchangeRate()
     }
@@ -236,9 +255,8 @@ class HomeScreenActivity : AppCompatActivity(),
     }
 
     override fun onGetLiveExchangeRateSuccess(liveExchangeRateResponse: LiveExchangeRateResponse?) {
-        lastRefreshedOn = Date().time
         lastUpdatedTimeStamp = liveExchangeRateResponse?.timestamp
-        var tempList: MutableList<CurrencyRateDetails> = ArrayList()
+        val tempList: MutableList<CurrencyRateDetails> = ArrayList()
         liveExchangeRateResponse?.quotes!!.forEach {
             val currencyRateDetails = CurrencyRateDetails()
             currencyRateDetails.symbol = it.key.substring(3, 6)
@@ -298,5 +316,20 @@ class HomeScreenActivity : AppCompatActivity(),
             refreshHandler!!.removeCallbacksAndMessages(REFRESH_HANDLER_MESSAGE)
         }
         super.onStop()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(PARCEABLE_AMOUNT_KEY, binding?.edtAmount?.text.toString())
+        outState.putInt(PARCEABLE_SELECTED_SORTED, selectedFilterMode)
+
+        val liveExchangeRateResponse = LiveExchangeRateResponse()
+        liveExchangeRateResponse.quotes = exchangeSymbolRateMap
+        liveExchangeRateResponse.timestamp = lastUpdatedTimeStamp
+        outState.putParcelable(PARCEABLE_LIVE_RATES, liveExchangeRateResponse)
+
+        val availableCurrencyResponse = AvailableCurrencyResponse()
+        availableCurrencyResponse.currencies = availableCurrencyMap
+        outState.putParcelable(PARCEABLE_AVAILABLE_CURRENCY, availableCurrencyResponse)
     }
 }

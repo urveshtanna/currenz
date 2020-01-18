@@ -1,8 +1,11 @@
 package com.urveshtanna.currenz.domain.dataModel
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-open class BaseResponse {
+@Parcelize
+open class BaseResponse() : Parcelable {
 
     @SerializedName("success")
     var success: Boolean? = false
