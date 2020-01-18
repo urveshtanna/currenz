@@ -48,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/topPanel"
                 tools:itemCount="30"
+                android:scrollbars="vertical"
                 tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 tools:listitem="@layout/item_currency_rate"
                 tools:spanCount="3" />
