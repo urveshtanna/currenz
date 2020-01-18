@@ -41,19 +41,18 @@ class HomeScreenActivity : AppCompatActivity(),
     val PARCEABLE_AVAILABLE_CURRENCY = "availableCurrency"
     val PARCEABLE_LIVE_RATES = "liveRates"
 
-
-    var binding: ActivityHomeScreenBinding? = null
     var availableCurrencyMap: HashMap<String, String>? = HashMap()
     var lastUpdatedTimeStamp: Long? = null
 
     val exchangeRate: MutableList<CurrencyRateDetails> = ArrayList()
     var exchangeSymbolRateMap: HashMap<String, Float> = HashMap()
 
+    var binding: ActivityHomeScreenBinding? = null
     var adapter = ExchangeRateAdapter(this, exchangeRate, this)
     var selectedFilterMode = 0
-
     var refreshHandler: Handler? = null
     var REFRESH_HANDLER_MESSAGE: Int = 1235
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
