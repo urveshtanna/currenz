@@ -37,15 +37,17 @@ class CurrencyConversionServiceAdapter(var context: Context) {
         }
     }
 
-    fun getInternetValidatedClient(): OkHttpClient {
-        val httpClient = OkHttpClient.Builder()
-        if (SettingsUtils.isDebug()) {
-            val interceptor = HttpLoggingInterceptor()
-            interceptor.level = HttpLoggingInterceptor.Level.BODY
-            httpClient.addInterceptor(interceptor)
+    companion object {
+        fun getInternetValidatedClient(): OkHttpClient {
+            val httpClient = OkHttpClient.Builder()
+            if (SettingsUtils.isDebug()) {
+                val interceptor = HttpLoggingInterceptor()
+                interceptor.level = HttpLoggingInterceptor.Level.BODY
+                httpClient.addInterceptor(interceptor)
+            }
+            httpClient.readTimeout(60, TimeUnit.SECONDS)
+            httpClient.connectTimeout(60, TimeUnit.SECONDS)
+            return httpClient.build()
         }
-        httpClient.readTimeout(60, TimeUnit.SECONDS)
-        httpClient.connectTimeout(60, TimeUnit.SECONDS)
-        return httpClient.build()
     }
 }

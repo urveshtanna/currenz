@@ -67,7 +67,7 @@ class ExchangeRateAdapter(var context: Context, var exchangeRateList: List<Curre
                     exchangeRateList[holder.adapterPosition].formattedExchangeValue(),
                     exchangeRateList[holder.adapterPosition].formattedLastUpdated()))
                 dialog.setPositiveButton(context.getString(R.string.dismiss)
-                ) { p0, p1 -> p0?.dismiss() }
+                ) { p0, _ -> p0?.dismiss() }
                 dialog.create().show()
             }
         } else if(holder is FooterHolder){
