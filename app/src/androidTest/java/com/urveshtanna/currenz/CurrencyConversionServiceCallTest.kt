@@ -111,6 +111,14 @@ class CurrencyConversionServiceCallTest {
         Assert.assertEquals(liveRate.body()?.quotes?.size!! > 0, true)
     }
 
+    @Test
+    fun testAvailableCurrency() {
+        val liveRate = apiService.getAllAvailableCurrencies(TEST_ACCESS_KEY).execute()
+        Assert.assertTrue(liveRate.isSuccessful)
+        Assert.assertTrue(liveRate?.body()?.success!!)
+        Assert.assertEquals(liveRate.body()?.currencies?.size!! > 0, true)
+    }
+
     @After
     fun tearDown() {
         mockServer.shutdown()
