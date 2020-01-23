@@ -14,7 +14,7 @@ class SettingsUtils {
          * Testing function to enable/disable mock server calls
          */
         fun makeMockAPICalls(): Boolean {
-            return isDebug()
+            return false
         }
     }
 }
